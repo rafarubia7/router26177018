@@ -34,6 +34,7 @@ function Detalhes({ registros }) {
         <dd>{registro.sala}</dd>
       </dl>
       <div className="acoes">
+        <Link to={`/equipamentos/${registro.id}/editar`} className="botao">Editar</Link>
         <Link to="/equipamentos" className="botao botao-secundario">Voltar para a lista</Link>
       </div>
     </section>

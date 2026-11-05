@@ -229,3 +229,7 @@ code {
 .detalhes { margin: 0 0 1.5rem; }
 .detalhes dt { font-size: .85rem; color: var(--texto-suave); }
 .detalhes dd { margin: 0 0 .75rem; font-weight: 600; font-size: 1.05rem; }
+
+/* botões dentro do card (opcional O4) */
+.acoes-card { display: flex; gap: .5rem; flex-wrap: wrap; }
+.botao-pequeno { padding: .35rem .8rem; font-size: .9rem; }

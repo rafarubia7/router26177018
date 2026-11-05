@@ -60,13 +60,18 @@ function Visualizacao({ titulo, registros, removerRegistro }) {
                 <dt>Sala</dt>
                 <dd>{registro.sala}</dd>
               </dl>
-              <button
-                type="button"
-                className="botao botao-perigo"
-                onClick={() => removerRegistro(registro.id)}
-              >
-                Remover
-              </button>
+              <div className="acoes-card">
+                <Link to={`/equipamentos/${registro.id}/editar`} className="botao botao-pequeno">
+                  Editar
+                </Link>
+                <button
+                  type="button"
+                  className="botao botao-perigo"
+                  onClick={() => removerRegistro(registro.id)}
+                >
+                  Remover
+                </button>
+              </div>
             </article>
           ))}
         </div>

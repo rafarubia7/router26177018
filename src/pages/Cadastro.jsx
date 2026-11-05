@@ -1,15 +1,41 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 // formulário vazio, usado como valor inicial
 const formularioVazio = { patrimonio: '', anoAquisicao: '', tipo: '', sala: '' }
 
-// página de cadastro de equipamento
-// recebo `adicionarRegistro` do App.jsx: é a função que coloca o equipamento no estado de lá
-function Cadastro({ adicionarRegistro }) {
-  const [form, setForm] = useState(formularioVazio)
+// página de cadastro de equipamento (e de edição, no opcional O4)
+// recebo `adicionarRegistro` do App.jsx: é a função que coloca o equipamento no estado de lá.
+// na rota de editar, recebo também `registros` (pra achar o equipamento) e `editarRegistro`
+function Cadastro({ adicionarRegistro, registros = [], editarRegistro }) {
+  // se a URL tiver :id, estou editando; se não, é um cadastro novo
+  const { id } = useParams()
+  const registroEditado = id ? registros.find((item) => String(item.id) === id) : null
+
+  // no modo editar o formulário já começa preenchido com os dados do equipamento
+  const [form, setForm] = useState(() =>
+    registroEditado
+      ? {
+          patrimonio: registroEditado.patrimonio,
+          anoAquisicao: String(registroEditado.anoAquisicao),
+          tipo: registroEditado.tipo,
+          sala: registroEditado.sala,
+        }
+      : formularioVazio,
+  )
   const [erros, setErros] = useState({})
   const navigate = useNavigate()
+
+  // tentou editar um id que não existe
+  if (id && !registroEditado) {
+    return (
+      <section className="cartao-centro">
+        <h1>Equipamento não encontrado</h1>
+        <p>Não existe equipamento com o id <code>{id}</code> para editar.</p>
+        <Link to="/equipamentos" className="botao">Voltar para a lista</Link>
+      </section>
+    )
+  }
 
   // atualiza só o campo que mudou, usando o name do input
   function handleChange(e) {
@@ -39,20 +65,25 @@ function Cadastro({ adicionarRegistro }) {
     setErros(novosErros)
     if (Object.keys(novosErros).length > 0) return
 
-    const novo = {
-      id: Date.now(),
+    const dados = {
       patrimonio: form.patrimonio.trim(),
       anoAquisicao: Number(form.anoAquisicao),
       tipo: form.tipo,
       sala: form.sala.trim(),
     }
-    adicionarRegistro(novo)
+
+    if (registroEditado) {
+      // editando: mantenho o mesmo id e troco só os campos
+      editarRegistro({ ...registroEditado, ...dados })
+    } else {
+      adicionarRegistro({ id: Date.now(), ...dados })
+    }
     navigate('/equipamentos')
   }
 
   return (
     <section className="cartao-form">
-      <h1>Cadastrar equipamento</h1>
+      <h1>{registroEditado ? 'Editar equipamento' : 'Cadastrar equipamento'}</h1>
       <form onSubmit={handleSubmit} noValidate>
         <div className="campo">
           <label htmlFor="patrimonio">Patrimônio</label>
@@ -114,7 +145,9 @@ function Cadastro({ adicionarRegistro }) {
           {erros.sala && <p id="erro-sala" className="erro" role="alert">{erros.sala}</p>}
         </div>
 
-        <button type="submit" className="botao">Salvar</button>
+        <button type="submit" className="botao">
+          {registroEditado ? 'Salvar alterações' : 'Salvar'}
+        </button>
       </form>
     </section>
   )

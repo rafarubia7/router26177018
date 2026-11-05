@@ -60,6 +60,12 @@ function App() {
     setRegistros(registros.filter((registro) => registro.id !== id))
   }
 
+  // troca um equipamento editado: o map cria um array novo,
+  // colocando o editado no lugar do que tem o mesmo id
+  function editarRegistro(editado) {
+    setRegistros(registros.map((registro) => (registro.id === editado.id ? editado : registro)))
+  }
+
   return (
     <>
       <Navbar quantidade={quantidade} />
@@ -79,6 +85,10 @@ function App() {
               />}
           />
           <Route path="/equipamentos/:id" element={<Detalhes registros={registros} />} />
+          <Route
+            path="/equipamentos/:id/editar"
+            element={<Cadastro registros={registros} editarRegistro={editarRegistro} />}
+          />
           {/* o * pega qualquer caminho que não existe */}
           <Route path="*" element={<NaoEncontrada />} />
         </Routes>
