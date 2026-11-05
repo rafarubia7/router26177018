@@ -215,3 +215,10 @@ code {
 /* botão de remover (opcional O3) */
 .botao-perigo { background: #fff; color: var(--erro); border-color: var(--erro); padding: .35rem .8rem; font-size: .9rem; }
 .botao-perigo:hover { background: var(--erro); border-color: var(--erro); color: #fff; }
+
+/* busca (opcional O5) */
+.busca { display: flex; flex-direction: column; max-width: 360px; margin-bottom: 1.25rem; }
+.busca label { font-weight: 600; margin-bottom: .3rem; }
+.busca input { font: inherit; padding: .55rem .7rem; border: 1px solid var(--borda); border-radius: 6px; }
+.busca input:focus { outline: 2px solid var(--cor-principal); outline-offset: 1px; }
+.aviso { color: var(--texto-suave); }
