@@ -211,3 +211,7 @@ code {
   .nav-link { flex: 1; text-align: center; padding: .45rem .5rem; }
   .cartao-centro, .cartao-form { padding: 1.25rem; }
 }
+
+/* botão de remover (opcional O3) */
+.botao-perigo { background: #fff; color: var(--erro); border-color: var(--erro); padding: .35rem .8rem; font-size: .9rem; }
+.botao-perigo:hover { background: var(--erro); border-color: var(--erro); color: #fff; }

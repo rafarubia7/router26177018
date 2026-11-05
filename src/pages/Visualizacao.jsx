@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 
 // visualização no formato C = 2: cards em grade (CSS Grid), um card por equipamento
-// recebo `titulo` (uma constante) e `registros` (o estado) do App.jsx
-function Visualizacao({ titulo, registros }) {
+// recebo `titulo` (uma constante) e `registros` (o estado) do App.jsx,
+// e também `removerRegistro`, a função do App que tira um equipamento do estado
+function Visualizacao({ titulo, registros, removerRegistro }) {
   // se não tiver nenhum equipamento, mostro um aviso com link pro cadastro
   if (registros.length === 0) {
     return (
@@ -29,6 +30,13 @@ function Visualizacao({ titulo, registros }) {
               <dt>Sala</dt>
               <dd>{registro.sala}</dd>
             </dl>
+            <button
+              type="button"
+              className="botao botao-perigo"
+              onClick={() => removerRegistro(registro.id)}
+            >
+              Remover
+            </button>
           </article>
         ))}
       </div>

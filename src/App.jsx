@@ -34,6 +34,11 @@ function App() {
     setRegistros([...registros, novo])
   }
 
+  // remove um equipamento: o filter cria um array novo sem o id escolhido
+  function removerRegistro(id) {
+    setRegistros(registros.filter((registro) => registro.id !== id))
+  }
+
   return (
     <>
       <Navbar quantidade={quantidade} />
@@ -46,7 +51,11 @@ function App() {
           />
           <Route
             path="/equipamentos"
-            element={<Visualizacao titulo={titulo} registros={registros} />}
+            element={<Visualizacao
+                titulo={titulo}
+                registros={registros}
+                removerRegistro={removerRegistro}
+              />}
           />
           {/* o * pega qualquer caminho que não existe */}
           <Route path="*" element={<NaoEncontrada />} />
