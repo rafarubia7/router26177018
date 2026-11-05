@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
+import Rodape from './components/Rodape.jsx'
 import Home from './pages/Home.jsx'
 import Cadastro from './pages/Cadastro.jsx'
 import Visualizacao from './pages/Visualizacao.jsx'
@@ -51,6 +52,8 @@ function App() {
           <Route path="*" element={<NaoEncontrada />} />
         </Routes>
       </main>
+      {/* fora do Routes, então aparece em todas as páginas */}
+      <Rodape />
     </>
   )
 }

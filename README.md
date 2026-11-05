@@ -1,16 +1,64 @@
-# React + Vite
+# Laboratório de informática — Rafael
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+SPA em React + React Router para cadastrar e listar os equipamentos de um laboratório de informática.
 
-Currently, two official plugins are available:
+- **Aluno:** Rafael Rubiá Oliveira Cardoso
+- **RA:** 26177018
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Meus parâmetros
 
-## React Compiler
+Dígitos do RA: 2, 6, 1, 7, 7, 0, 1, 8. O script `node scripts/parametros.js` mostra o cálculo.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Parâmetro | Cálculo | Resultado |
+|---|---|---|
+| A (tema) | 18 (dois últimos dígitos) mod 20 | **18** → Laboratório de informática, slug `equipamentos` |
+| Campos | Tabela A, linha 18 | Patrimônio (texto), Ano de aquisição (número), Tipo (Desktop, Notebook, Projetor), Sala |
+| B (validação) | antepenúltimo dígito | **0** → campo principal com no mínimo 3 caracteres (com trim) |
+| C (visualização) | 2+6+1+7+7+0+1+8 = 32 mod 6 | **2** → cards em grade (CSS Grid) |
+| D (navbar) | 4º dígito do final = 7 → 7 mod 4 | **3** → topo, nome à esquerda, links à direita, "Equipamentos (N)" |
+| Cor | 018 (três últimos dígitos) mod 360 | **h = 18** → `hsl(18, 60%, 35%)` = `#8f4424` |
 
-## Expanding the Oxlint configuration
+## Como rodar
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+npm install
+npm run dev     # servidor de desenvolvimento
+npm run build   # build de produção
+```
+
+## Rotas
+
+| Rota | Página |
+|---|---|
+| `/` | Home: nome do sistema, aluno e quantidade |
+| `/equipamentos/novo` | Cadastro com validação |
+| `/equipamentos` | Visualização em cards |
+| `*` | Página não encontrada (mostra o caminho digitado) |
+
+## Estrutura de pastas
+
+```
+index.html
+scripts/parametros.js   cálculo dos parâmetros pelo RA
+src/
+  main.jsx              BrowserRouter envolvendo o App
+  App.jsx               estado (useState), funções e <Routes>
+  index.css             --cor-principal e estilos
+  components/Navbar.jsx
+  components/Rodape.jsx
+  pages/Home.jsx
+  pages/Cadastro.jsx
+  pages/Visualizacao.jsx
+  pages/NaoEncontrada.jsx
+```
+
+## Opcionais feitos
+
+Nenhum até agora.
+
+## Como o dado flui
+
+1. Em `Cadastro.jsx`, o formulário controlado guarda os campos num estado local e valida ao salvar.
+2. Se estiver válido, chama `adicionarRegistro(novo)`, função que veio do `App.jsx` por props.
+3. No `App.jsx`, `adicionarRegistro` faz `setRegistros([...registros, novo])`, atualizando o `useState` sem mutar o array.
+4. O `App` passa `registros` para a `Visualizacao` (cards) e `registros.length` para a Home e a Navbar, que atualizam sem recarregar a página.
