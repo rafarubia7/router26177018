@@ -47,7 +47,12 @@ function Visualizacao({ titulo, registros, removerRegistro }) {
           {/* uso o id como key, nunca o índice do array */}
           {filtrados.map((registro) => (
             <article key={registro.id} className="card">
-              <h2>{registro.patrimonio}</h2>
+              {/* clicar no patrimônio abre a página de detalhes */}
+              <h2>
+                <Link to={`/equipamentos/${registro.id}`} className="link-card">
+                  {registro.patrimonio}
+                </Link>
+              </h2>
               <span className="etiqueta">{registro.tipo}</span>
               <dl>
                 <dt>Ano de aquisição</dt>

@@ -6,6 +6,7 @@ import Home from './pages/Home.jsx'
 import Cadastro from './pages/Cadastro.jsx'
 import Visualizacao from './pages/Visualizacao.jsx'
 import NaoEncontrada from './pages/NaoEncontrada.jsx'
+import Detalhes from './pages/Detalhes.jsx'
 
 // 3 equipamentos de exemplo pra lista não começar vazia.
 // o primeiro tem meu RA no campo complementar (sala)
@@ -77,6 +78,7 @@ function App() {
                 removerRegistro={removerRegistro}
               />}
           />
+          <Route path="/equipamentos/:id" element={<Detalhes registros={registros} />} />
           {/* o * pega qualquer caminho que não existe */}
           <Route path="*" element={<NaoEncontrada />} />
         </Routes>

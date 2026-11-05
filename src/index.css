@@ -222,3 +222,10 @@ code {
 .busca input { font: inherit; padding: .55rem .7rem; border: 1px solid var(--borda); border-radius: 6px; }
 .busca input:focus { outline: 2px solid var(--cor-principal); outline-offset: 1px; }
 .aviso { color: var(--texto-suave); }
+
+/* detalhes (opcional O2) */
+.link-card { color: inherit; text-decoration: none; }
+.link-card:hover { text-decoration: underline; color: var(--cor-principal); }
+.detalhes { margin: 0 0 1.5rem; }
+.detalhes dt { font-size: .85rem; color: var(--texto-suave); }
+.detalhes dd { margin: 0 0 .75rem; font-weight: 600; font-size: 1.05rem; }
