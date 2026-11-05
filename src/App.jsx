@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Rodape from './components/Rodape.jsx'
@@ -15,10 +15,30 @@ const registrosIniciais = [
   { id: 3, patrimonio: 'PAT-0003', anoAquisicao: 2019, tipo: 'Projetor', sala: 'Auditório' },
 ]
 
+// nome da "gaveta" do localStorage onde guardo a lista (opcional O6)
+const CHAVE_STORAGE = 'equipamentos-26177018'
+
 // o App é o "dono" dos dados: ele guarda o estado e passa pras páginas por props
 function App() {
-  // aqui fica a lista de equipamentos do sistema inteiro
-  const [registros, setRegistros] = useState(registrosIniciais)
+  // aqui fica a lista de equipamentos do sistema inteiro.
+  // começa lendo o que ficou salvo no navegador; se não tiver nada (ou der erro), usa os 3 de exemplo
+  const [registros, setRegistros] = useState(() => {
+    try {
+      const salvo = localStorage.getItem(CHAVE_STORAGE)
+      return salvo ? JSON.parse(salvo) : registrosIniciais
+    } catch {
+      return registrosIniciais
+    }
+  })
+
+  // toda vez que a lista muda, salvo ela no localStorage pra não perder ao recarregar
+  useEffect(() => {
+    try {
+      localStorage.setItem(CHAVE_STORAGE, JSON.stringify(registros))
+    } catch {
+      // se o navegador bloquear o localStorage, o app continua funcionando só na memória
+    }
+  }, [registros])
 
   // constante que mando pra Visualização usar como título
   const titulo = 'Lista de equipamentos'
